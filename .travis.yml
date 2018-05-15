@@ -14,9 +14,7 @@ branches:
     - develop
 
 r:
-  - oldrel
   - release
-  - devel
 
 before_install:
   - sudo apt-get update || true
