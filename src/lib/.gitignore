@@ -1,0 +1,9 @@
+target
+Dockerfile.test
+**/*.o
+**/*.so
+**/.Rproj.user
+**/.Rhistory
+**/.RData
+*.Rcheck
+**/libs

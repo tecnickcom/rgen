@@ -1,0 +1,12 @@
+Package: ~#PROJECT#~
+Title: ~#PROJECT#~
+Version: 1.0.0.1
+Authors@R: person("~#OWNER#~", email = "~#OWNEREMAIL#~", role = c("aut", "cre"))
+Description: ~#SHORTDESCRIPTION#~
+Depends: R (>= 3.4.1)
+License: ~#LICENSE#~ + file LICENSE
+URL: ~#PROJECTLINK#~
+BugReports: ~#PROJECTLINK#~/issues
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat
