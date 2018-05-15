@@ -1,4 +1,4 @@
-language: r
+language: clang
 
 dist: trusty
 
