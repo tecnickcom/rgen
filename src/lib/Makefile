@@ -5,7 +5,7 @@
 # ------------------------------------------------------------------------------
 
 # List special make targets that are not associated with files
-.PHONY: help version conda conda_dev build dbuild test clean
+.PHONY: help version init conda conda_dev build dbuild test clean
 
 # Project name
 PROJECT=~#PROJECT#~
@@ -31,6 +31,7 @@ help:
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make version    : Set version from VERSION file"
+	@echo "    make init       : Initialize the project"
 	@echo "    make conda      : Build minimal Conda environment"
 	@echo "    make conda_dev  : Build development Conda environment"
 	@echo "    make build      : Build a Conda package"
@@ -46,6 +47,9 @@ version:
 	sed -i "s/version:.*$$/version: $(VERSION)/" conda/meta.yaml
 	sed -i "s/number:.*$$/number: $(RELEASE)/" conda/meta.yaml
 	sed -i "s/Version:.*$$/Version: $(VERSION).$(RELEASE)/" ~#PROJECT#~/DESCRIPTION
+
+# Initialize the project
+init:
 	R -e 'library(devtools);library(roxygen2);setwd("./~#PROJECT#~");document()'
 
 # Build minimal Conda environment
