@@ -1,3 +1,3 @@
 echo -e "\n\n*** TEST ***\n\n"
-cd ../work
+cd ${PROJECT_ROOT}
 $R -e 'library(testthat);testthat::test_dir("~#PROJECT#~/tests")'

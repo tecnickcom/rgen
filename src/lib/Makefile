@@ -22,6 +22,9 @@ include conda/channels.mk
 # Conda environment
 CONDA_ENV=../env-${PROJECT}
 
+# Current directory
+CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+
 # --- MAKE TARGETS ---
 
 # Display general help about this command
@@ -65,7 +68,7 @@ conda_dev:
 # Build a conda package
 build: clean version conda
 	mkdir -p target
-	"${CONDA_ENV}/bin/conda" build --prefix-length 128 --no-anaconda-upload --no-remove-work-dir --override-channels $(CONDA_CHANNELS) conda
+	PROJECT_ROOT=${CURRENTDIR} ${CONDA_ENV}/bin/conda build --prefix-length 128 --no-anaconda-upload --override-channels $(CONDA_CHANNELS) conda
 
 # Remove any build artifact
 clean:
