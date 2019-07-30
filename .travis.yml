@@ -22,6 +22,4 @@ before_install:
   - if [ -n "$GH_TOKEN" ]; then git config --global github.token ${GH_TOKEN}; fi;
 
 script:
-  - make new TYPE=lib
-  - cd target/github.com/dummyvendor/dummy
-  - make build
+  - make test

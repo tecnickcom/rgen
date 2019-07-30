@@ -6,11 +6,8 @@
 # This file is intended to be executed in a Linux-compatible system.
 # ------------------------------------------------------------------------------
 
-# List special make targets that are not associated with files
-.PHONY: help all new newproject rename template confirm clean
-
 # Current directory
-CURRENTDIR=$(shell pwd)
+CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # Set default project type
 ifeq ($(TYPE),)
@@ -35,6 +32,7 @@ BASEPROJECT=${PROJECT}
 # --- MAKE TARGETS ---
 
 # Display general help about this command
+.PHONY: help
 help:
 	@echo ""
 	@echo "RGen Makefile."
@@ -53,19 +51,23 @@ help:
 all: help
 
 # Generate a new project
+.PHONY: new
 new: newproject rename template confirm
 
 # Copy the project template in the output folder
+.PHONY: newproject
 newproject:
 	@mkdir -p ./target/$(CVSPATH)/$(PROJECT)
 	@rm -rf ./target/$(CVSPATH)/$(PROJECT)/*
 	@cp -rf ./src/$(TYPE)/. ./target/$(CVSPATH)/$(PROJECT)/
 
 # Rename project files
+.PHONY: rename
 rename:
 	@find ./target/$(CVSPATH)/$(PROJECT)/ -type d -name "_PROJECT_*" -execdir mv '{}' "$(PROJECT)" \; -prune
 
 # Replace text templates in the code
+.PHONY: template
 template:
 	@find ./target/$(CVSPATH)/$(PROJECT)/ -type f -exec sed -i "s/~#PROJECT#~/$(PROJECT)/g" {} \;
 	@find ./target/$(CVSPATH)/$(PROJECT)/ -type f -exec sed -i "s/~#BASEPROJECT#~/$(BASEPROJECT)/g" {} \;
@@ -81,9 +83,17 @@ template:
 	@find ./target/$(CVSPATH)/$(PROJECT)/ -type f -exec sed -i "s/~#LICENSE#~/$(LICENSE)/g" {} \;
 
 # Print confirmation message
+.PHONY: confirm
 confirm:
 	@echo "A new "$(TYPE)" project has been created: "target/$(CVSPATH)/$(PROJECT)
 
 # Remove all generated projects
+.PHONY: clean
 clean:
 	@rm -rf ./target
+
+# Test the generator
+.PHONY: test
+test:
+	make clean new TYPE=lib
+	cd target/github.com/dummyvendor/dummy && make build
